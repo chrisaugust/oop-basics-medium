@@ -8,7 +8,9 @@ class GuessingGame
   end
 
   def play
+    system 'clear'
     while guesses > 0
+      display_remaining_guesses
       guess = get_player_guess
       check_against_number(guess)
       self.guesses -= 1
@@ -17,12 +19,18 @@ class GuessingGame
   end
 
   private
+  
+  def display_remaining_guesses
+    puts "You have #{guesses} guesses remaining."
+  end
 
   def get_player_guess
-    puts
-    puts "You have #{guesses} guesses remaining."
-    print "Enter a number between 1 and 100: "
-    guess = gets.chomp.to_i
+    loop do
+      print "Enter a number between 1 and 100: "
+      guess = gets.chomp.to_i
+      return guess if (1..100).cover?(guess)
+      puts "Invalid guess"
+    end
   end
 
   def check_against_number(guess)
